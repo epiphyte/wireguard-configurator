@@ -1,0 +1,4 @@
+[Peer]
+#${client_name}
+PublicKey = ${client_public_key}
+AllowedIPs = 10.0.0.${client_number}/32
