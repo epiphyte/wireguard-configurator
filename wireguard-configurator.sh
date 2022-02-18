@@ -34,7 +34,7 @@ generate_new_configuration() {
     server_private_key=$SERVER_PRIVATE_KEY envsubst < wg0.conf.template > $TMPDIR/wg0.conf
 
     #client
-    echo "1" > $TMPDIR/client_number
+    echo "10" > $TMPDIR/client_number
     echo $1 > $TMPDIR/server_address
 }
 
@@ -65,11 +65,14 @@ new_client() {
 
     #Adding configuration to server
     echo "Adding client configuration to server"
-    sudo wg set wg0 peer $(cat /etc/wireguard/clients/$1/client.conf | grep "PublicKey" | awk '{print $2}') allowed-ips
+    sudo wg set wg0 peer $(cat /etc/wireguard/clients/$1/client.conf | grep "PublicKey" | awk '{print $3}') allowed-ips
 
     #Incrementing client number
     echo $(($CLIENT_NUMBER+1)) > /etc/wireguard/client_number
 
+    #Restarting server
+    echo "Restarting WireGuard Server"
+    sudo systemctl restart wg-quick@wg0
 }
 
 
