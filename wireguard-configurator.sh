@@ -42,6 +42,7 @@ generate_new_configuration() {
 install_configuration() {
     echo "Installing wireguard"
     sudo cp -pr $TMPDIR/* /etc/wireguard/
+    sudo systemctl start wg-quick@wg0
 }
 
 
@@ -65,6 +66,10 @@ new_client() {
     #Adding configuration to server
     echo "Adding client configuration to server"
     sudo wg set wg0 peer $(cat /etc/wireguard/clients/$1/client.conf | grep "PublicKey" | awk '{print $2}') allowed-ips
+
+    #Incrementing client number
+    echo $(($CLIENT_NUMBER+1)) > /etc/wireguard/client_number
+
 }
 
 
@@ -74,10 +79,10 @@ while getopts "n:ic:" optname
   do
     case "$optname" in
       "n")
-        generate_new_configuration()
+        generate_new_configuration $OPTARG
         ;;
       "i")
-        install_configuration()
+        install_configuration
         ;;
       "c")
         new_client $OPTARG
