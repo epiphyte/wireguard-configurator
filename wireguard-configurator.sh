@@ -5,7 +5,7 @@
 # Author       	    :Fernandez-Alcon, Jose                
 # Email         	:jose@epiphyte.io
 # Date          	:2022-Feb-18
-# Version       	:0.1.0
+# Version       	:0.2.0
 # 
 # Description   	: Deploys wireguard in a new server
 #                                         
@@ -13,7 +13,7 @@
 #
 # History
 ###################################################################
-version="0.1.0"
+version="0.2.0"
 
 TMPDIR="/tmp/wireguard"
 
@@ -65,7 +65,8 @@ new_client() {
 
     #Adding configuration to server
     echo "Adding client configuration to server"
-    sudo wg set wg0 peer $CLIENT_PUBLIC_KEY endpoint SERVER_ADDRESS:51820 allowed-ips 10.0.0.0/24, 0.0.0.0/0
+    # sudo wg set wg0 peer $CLIENT_PUBLIC_KEY endpoint $SERVER_ADDRESS:51820 allowed-ips 10.0.0.0/24, 0.0.0.0/0
+    client_name=$S1 client_public_key=$CLIENT_PUBLIC_KEY  client_number=$CLIENT_NUMBER envsubst < client-wg0.conf.template >> /etc/wireguard/wg0.conf
 
     #Incrementing client number
     echo $(($CLIENT_NUMBER+1)) > /etc/wireguard/client_number
@@ -76,9 +77,14 @@ new_client() {
 }
 
 
+display_client_qr() {
+    echo "Displaying QR code"
+    qrencode -t ansiutf8 < /etc/wireguard/clients/$1/client.conf
+}
+
 
 #!/bin/bash
-while getopts "n:ic:" optname
+while getopts "n:ic:d:" optname
   do
     case "$optname" in
       "n")
@@ -90,6 +96,9 @@ while getopts "n:ic:" optname
       "c")
         new_client $OPTARG
         ;;
+      "d")
+        display_client_qr $OPTARG
+        ;;        
       "?")
         echo "Unknown option $OPTARG"
         ;;
