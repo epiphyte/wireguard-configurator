@@ -48,7 +48,7 @@ install_configuration() {
 
 new_client() {
     
-    mkdir -p $/etc/wireguard/clients/$1
+    mkdir -p /etc/wireguard/clients/$1
     #Generate client key pair
     echo "Generating a new client key pair"
     wg genkey | sudo tee /etc/wireguard/clients/$1/"$1".key | wg pubkey | sudo tee /etc/wireguard/clients/$1/"$1".key.pub
@@ -61,7 +61,7 @@ new_client() {
     SERVER_PUBLIC_KEY=$(cat /etc/wireguard/publickey)
 
     #Generating client configuration
-    server_address=$SERVER_ADDRESS client_private_key=$CLIENT_PRIVATE_KEY  client_number=$CLIENT_NUMBER envsubst < client.conf.template > /etc/wireguard/clients/$1/client.conf
+    server_address=$SERVER_ADDRESS server_public_key=$SERVER_PUBLIC_KEY client_private_key=$CLIENT_PRIVATE_KEY  client_number=$CLIENT_NUMBER envsubst < client.conf.template > /etc/wireguard/clients/$1/client.conf
 
     #Adding configuration to server
     echo "Adding client configuration to server"
