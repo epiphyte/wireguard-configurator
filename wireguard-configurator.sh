@@ -70,7 +70,7 @@ new_client() {
 
 
 #!/bin/bash
-while getopts "nic:" optname
+while getopts "n:ic:" optname
   do
     case "$optname" in
       "n")
