@@ -1,9 +1,9 @@
 [Interface]
 PrivateKey = ${client_private_key}
 Address = 10.0.0.${client_number}/24
-DNS = 10.0.0.1, 192.168.1.150
+DNS = 10.0.0.1
 
 [Peer]
 PublicKey = ${server_public_key}
-AllowedIPs = 10.0.0.0/24, 192.168.1.0/24, 0.0.0.0/0
+AllowedIPs = 10.0.0.0/24, 0.0.0.0/0
 Endpoint = ${server_address}:51820

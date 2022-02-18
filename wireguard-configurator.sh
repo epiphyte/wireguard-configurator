@@ -65,7 +65,7 @@ new_client() {
 
     #Adding configuration to server
     echo "Adding client configuration to server"
-    sudo wg set wg0 peer $(cat /etc/wireguard/clients/$1/client.conf | grep "PublicKey" | awk '{print $3}') allowed-ips
+    sudo wg set wg0 peer $CLIENT_PUBLIC_KEY endpoint SERVER_ADDRESS:51820 allowed-ips 10.0.0.0/24, 0.0.0.0/0
 
     #Incrementing client number
     echo $(($CLIENT_NUMBER+1)) > /etc/wireguard/client_number
