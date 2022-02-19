@@ -63,10 +63,13 @@ new_client() {
     #Generating client configuration
     server_address=$SERVER_ADDRESS server_public_key=$SERVER_PUBLIC_KEY client_private_key=$CLIENT_PRIVATE_KEY  client_number=$CLIENT_NUMBER envsubst < client.conf.template > /etc/wireguard/clients/$1/client.conf
 
+    #Stopping wireguard
+    sudo systemctl stop wg-quick@wg0
+
     #Adding configuration to server
     echo "Adding client configuration to server"
     # sudo wg set wg0 peer $CLIENT_PUBLIC_KEY endpoint $SERVER_ADDRESS:51820 allowed-ips 10.0.0.0/24, 0.0.0.0/0
-    client_name=$S1 client_public_key=$CLIENT_PUBLIC_KEY  client_number=$CLIENT_NUMBER envsubst < client-wg0.conf.template >> /etc/wireguard/wg0.conf
+    client_name=$1 client_public_key=$CLIENT_PUBLIC_KEY  client_number=$CLIENT_NUMBER envsubst < client-wg0.conf.template >> /etc/wireguard/wg0.conf
 
     #Incrementing client number
     echo $(($CLIENT_NUMBER+1)) > /etc/wireguard/client_number
