@@ -41,6 +41,7 @@ generate_new_configuration() {
 
 install_configuration() {
     echo "Installing wireguard"
+    sudo systemctl stop wg-quick@wg0
     sudo cp -pr $TMPDIR/* /etc/wireguard/
     sudo systemctl start wg-quick@wg0
 }
