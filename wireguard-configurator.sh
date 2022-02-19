@@ -1,11 +1,11 @@
 #!/bin/bash
 
-###################################################################                                             
+###################################################################
 # Copyright (c) Epiphyte LLC 2022. All Rights Reserved.
-# Author       	    :Fernandez-Alcon, Jose                
+# Author       	  :Fernandez-Alcon, Jose
 # Email         	:jose@epiphyte.io
-# Date          	:2022-Feb-18
-# Version       	:0.2.0
+# Date          	:2022-Feb-19
+# Version       	:0.3.0
 # 
 # Description   	: Deploys wireguard in a new server
 #                                         
@@ -13,10 +13,10 @@
 #
 # History
 ###################################################################
-version="0.2.0"
+version="0.3.0"
 
 TMPDIR="/tmp/wireguard"
-
+INET_DEVICE="enp0s3"
 
 
 generate_new_configuration() {
@@ -31,7 +31,7 @@ generate_new_configuration() {
 
     #Generate server configuration
     echo "Generating server configuration"
-    server_private_key=$SERVER_PRIVATE_KEY envsubst < wg0.conf.template > $TMPDIR/wg0.conf
+    server_private_key=$SERVER_PRIVATE_KEY inet_device=$INET_DEVICE envsubst < wg0.conf.template > $TMPDIR/wg0.conf
 
     #client
     echo "10" > $TMPDIR/client_number
