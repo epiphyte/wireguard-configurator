@@ -1,10 +1,10 @@
 [Interface]
 PrivateKey = ${client_private_key}
-Address = 10.0.0.${client_number}/24
-DNS = 10.0.0.1
+Address = 10.99.0.${client_number}/24
+DNS = 1.1.1.2
 
 [Peer]
 PublicKey = ${server_public_key}
 Endpoint = ${server_address}:51820
-AllowedIPs = 10.0.0.0/24, 0.0.0.0/0
+AllowedIPs = 10.99.0.0/24, 0.0.0.0/0
 PersistentKeepalive = 25
