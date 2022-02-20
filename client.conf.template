@@ -1,7 +1,7 @@
 [Interface]
 PrivateKey = ${client_private_key}
 Address = 10.99.0.${client_number}/24
-DNS = 1.1.1.2
+DNS = 1.1.1.1
 
 [Peer]
 PublicKey = ${server_public_key}

@@ -44,6 +44,7 @@ install_configuration() {
     sudo systemctl stop wg-quick@wg0
     sudo cp -pr $TMPDIR/* /etc/wireguard/
     sudo systemctl start wg-quick@wg0
+    sudo systemctl enable wg-quick@wg0
 }
 
 
